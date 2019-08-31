@@ -1,0 +1,6 @@
+{
+    "sites" : [
+        {"matches":["*.amazon.com", "amazon.com"], "config":"amazon.com.json"},
+        {"matches":["*.ebay.com", "ebay.com"], "config":"ebay.com.json"}
+    ]
+}
