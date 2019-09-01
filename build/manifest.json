@@ -7,7 +7,10 @@
           "matches": [
             "<all_urls>"
           ],
-          "js": ["script/content.js"]
+          "js": ["jquery.js", "script/content.js"]
         }
-      ]
+      ],
+    "background": {
+      "scripts": ["jquery.js", "script/bg.js"]
+    }
   }

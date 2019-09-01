@@ -2,5 +2,7 @@
     "name": "Amazon",
     "slowImg" : true,
     "checkoutPage": ["*/gp/buy/spc/*"],
-    "checkoutPrompt": true
+    "checkoutPrompt": true,
+    "pause" : true,
+    "pauseTimeMs": 10000
 }
