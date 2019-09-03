@@ -45,7 +45,6 @@ function interfere(): void {
         const path = window.location.pathname;
         if(compareRegex(path, status.siteConfig.checkoutPage)) {
             //checkout page.
-            alert('You should think about this choice before you buy. Go Look at your budget.');
             let price: number;
             try {
                 const priceText = $(status.siteConfig.totalPrice).text().replace(/[^0-9.-]+/g,"");
@@ -56,8 +55,20 @@ function interfere(): void {
             } catch(err) {
                 price = parseFloat(prompt('enter total price.'));
             }
-            window.open(chrome.runtime.getURL('/pages/calc.html'));
-            chrome.runtime.sendMessage({target:"/pages/calc.htm?price="+price, type:'openTab'});
+            const key= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            let locked: boolean = true;
+            chrome.runtime.sendMessage({key, type:'register'});
+            chrome.runtime.onMessage.addListener((msg , sender, sendResponse): boolean => {
+                console.log({msg, sender});
+                if(msg.type!=='unlock') return false;
+                console.log({msg, sender, unlk: true});
+                //unlock
+                if(msg.reject) window.close();
+                locked = false;
+                return true;
+            });
+            chrome.runtime.sendMessage({target:"/pages/calc.html?price="+price+'&key='+key, type:'openTab'});
+            while(locked) alert('Confirm This Order In the New Tab. Or Close This Tab.');
         }
 
     }

@@ -11,23 +11,32 @@
     <title>Do I Really Need That.</title>
   </head>
   <body>
-    <h1>Is this purchase worth <span class='amtDisplay'></span>?</h1>
-    <table class='table' id='TimeValueChart'>
-      <thead>
-        <tr>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-
-      </tbody>
-    </table>
-    <small>This assumes a 12% annual rate of return. <a href="https://www.daveramsey.com/blog/the-12-reality">Source</a></small>
+    <div class="container">
+        <h1>Is this purchase worth <span class='amtDisplay'></span>?</h1>
+        <p><span class='amtDisplay'></span> will really cost you:</p>
+        <table class='table' id='TimeValueChart'>
+          <thead>
+            <tr>
+              <th>years from now</th>
+              <th>value</th>
+              <th>year</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+          </tbody>
+        </table>
+        <hr/>
+        <button type="button" class="btn btn-danger worthIt">It Is Worth It</button>
+        <button type="button" class="btn btn-success notWorthIt">It Is Not Worth It</button>
+        <br/>
+        <nav class="navbar navbar-light bg-light"><a href="/license.html" target='_blank'>&copy; Noah Witt 2019. MIT License.</a> <a href="mailto:noah@noah-witt.com">email me at noah@noah-witt.com</a> <small>This assumes a <samp>12%</samp> annual rate of return. <a href="https://www.daveramsey.com/blog/the-12-reality">Source</a></small></nav>
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="js/jquery.3.4.1.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/moment.js"></script>
+    <script src="/script/calc.js"></script>
   </body>
 </html>
