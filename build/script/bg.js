@@ -34,9 +34,20 @@ function pullData(url) {
         return cfg;
     });
 }
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => __awaiter(this, void 0, void 0, function* () {
-    console.log(request);
-    sendResponse(yield pullData(request.hostname));
-    return;
-}));
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    switch (request.type) {
+        case 'get':
+            pullData(request.hostname).then((response) => {
+                sendResponse(response);
+            }).catch((err) => {
+                console.error(err);
+            });
+            break;
+        case 'openTab':
+            const url = chrome.runtime.getURL(request.target);
+            chrome.tabs.create({ url });
+            break;
+    }
+    return true;
+});
 initBG();

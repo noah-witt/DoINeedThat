@@ -1,8 +1,11 @@
 {
     "name": "Amazon",
     "slowImg" : true,
-    "checkoutPage": ["*/gp/buy/spc/*"],
+    "checkoutPage": ["[a-zA-Z/?]*/gp/buy/[a-zA-Z/?]*"],
     "checkoutPrompt": true,
-    "pause" : true,
-    "pauseTimeMs": 10000
+    "pause" : false,
+    "pauseTimeMs": 1000,
+    "totalPrice": ".grand-total-price",
+    "scroll": false,
+    "linkDelay": false
 }

@@ -23,6 +23,7 @@
   "devDependencies": {
     "@types/chrome": "0.0.88",
     "@types/jquery": "^3.3.31",
+    "@types/moment": "^2.13.0",
     "@types/node": "^12.7.3"
   },
   "dependencies": {

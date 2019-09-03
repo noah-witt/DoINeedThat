@@ -38,10 +38,21 @@ async function pullData(url: string): Promise<siteConfig> {
     return cfg;
 }
 
-chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-    console.log(request);
-    sendResponse(await pullData(request.hostname));
-    return;
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    switch(request.type) {
+        case 'get':
+            pullData(request.hostname).then((response) => {
+                sendResponse(response);
+            }).catch((err)=> {
+                console.error(err);
+            });
+            break;
+        case 'openTab':
+            const url = chrome.runtime.getURL(request.target);
+            chrome.tabs.create({ url });
+            break;
+    }
+    return true;
 });
 
 initBG();
