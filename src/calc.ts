@@ -27,6 +27,7 @@ function drawTimeValueTable(price: number, today: any): void {
         $tablerow.find('.yearNum').text(target.year());
         $('#TimeValueChart tbody').append($tablerow);
     });
+    return;
 }
 
 function moneyFormatedFVal(presentValue: number, interestRate: number, numberOfPeriods: number): string {
@@ -34,6 +35,7 @@ function moneyFormatedFVal(presentValue: number, interestRate: number, numberOfP
     return moneyFormater(fVal);
 }
 
+//formats string $1,123,123.45
 function moneyFormater(money: number): string {
     const moneyRounded = money.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     const moneyString = '$'+moneyRounded;
