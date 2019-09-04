@@ -34,7 +34,7 @@ async function initCotent(): Promise<void> {
     return;
 }
 
-function interfere(): void {
+async function interfere(): Promise<void> {
     const status = doINeedThatStatus;
     if(!status.enabled) return;
     if(status.siteConfig.pause) {
@@ -59,18 +59,20 @@ function interfere(): void {
             let locked: boolean = true;
             chrome.runtime.sendMessage({key, type:'register'});
             chrome.runtime.onMessage.addListener((msg , sender, sendResponse): boolean => {
-                console.log({msg, sender});
                 if(msg.type!=='unlock') return false;
-                console.log({msg, sender, unlk: true});
                 //unlock
-                if(msg.reject) window.close();
+                console.log(msg.reject);
+                if(msg.reject) alert('close this tab');
                 locked = false;
                 return true;
             });
             chrome.runtime.sendMessage({target:"/pages/calc.html?price="+price+'&key='+key, type:'openTab'});
-            while(locked) alert('Confirm This Order In the New Tab. Or Close This Tab.');
+            while(locked) {
+                alert('Confirm This Order In the New Tab. Or Close This Tab.');
+                await sleep(1);
+            }
         }
-
+        return;
     }
     if(status.siteConfig.scroll) {
         window.onscroll = () => {
@@ -97,6 +99,10 @@ function frezeForTime(ms: number) {
         now = new Date();
     }
 }
+
+const sleep = (milliseconds: number): Promise<void> => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
 
 function sendMsg(): Promise<siteConfig> {
     const promise: Promise<siteConfig>= new Promise((resolve) => {

@@ -53,7 +53,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             break;
         case 'unlock':
             const key = keys[request.key];
-            console.log({ key, sender, request });
             chrome.tabs.sendMessage(key.source.tab.id, { type: 'unlock', reject: request.reject });
     }
     return true;

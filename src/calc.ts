@@ -6,13 +6,12 @@ function initCalcPage():void {
     const urlParams = new URLSearchParams(window.location.search);
     const price: number = parseFloat(urlParams.get('price'));
     key = urlParams.get('key');
-    console.log(key);
     $('.amtDisplay').text(moneyFormater(price));
     //@ts-ignore
     const today = moment();
     drawTimeValueTable(price, today);
     $('.worthIt').click(() => {
-        inform(false);
+        inform(true);
     });
     $('.notWorthIt').click(() => {
         inform(false);
@@ -43,9 +42,18 @@ function moneyFormater(money: number): string {
 
 function inform(reject: boolean): void {
     //inform bg page to forward messege to tab.
-    chrome.runtime.sendMessage({type: 'unlock', key, reject});
-    console.log({type: 'unlock', key, reject});
+    chrome.runtime.sendMessage({type: 'unlock', key, reject: !reject});
+    sleepCalc(250).then(() => {
+        chrome.tabs.getCurrent((tab) => {
+            chrome.tabs.remove(tab.id);
+        });
+    });
 }
+
+
+const sleepCalc = (milliseconds: number): Promise<void> => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
 
 //futere value calculator.
 function futureValue(presentValue: number, interestRate: number, numberOfPeriods: number): number {

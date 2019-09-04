@@ -1,6 +1,6 @@
 {
     "name": "Amazon",
-    "slowImg" : true,
+    "slowImg" : false,
     "checkoutPage": ["[a-zA-Z/?]*/gp/buy/[a-zA-Z/?]*"],
     "checkoutPrompt": true,
     "pause" : false,

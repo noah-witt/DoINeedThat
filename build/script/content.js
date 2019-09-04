@@ -19,59 +19,63 @@ function initCotent() {
     });
 }
 function interfere() {
-    const status = doINeedThatStatus;
-    if (!status.enabled)
-        return;
-    if (status.siteConfig.pause) {
-        frezeForTime(status.siteConfig.pauseTimeMs);
-    }
-    if (status.siteConfig.checkoutPrompt) {
-        //now check to see if page matches regex.
-        const path = window.location.pathname;
-        if (compareRegex(path, status.siteConfig.checkoutPage)) {
-            //checkout page.
-            let price;
-            try {
-                const priceText = $(status.siteConfig.totalPrice).text().replace(/[^0-9.-]+/g, "");
-                const priceTemp = parseFloat(priceText);
-                // tslint:disable-next-line: no-string-throw
-                if (isNaN(priceTemp))
-                    throw ('not correct');
-                price = priceTemp;
+    return __awaiter(this, void 0, void 0, function* () {
+        const status = doINeedThatStatus;
+        if (!status.enabled)
+            return;
+        if (status.siteConfig.pause) {
+            frezeForTime(status.siteConfig.pauseTimeMs);
+        }
+        if (status.siteConfig.checkoutPrompt) {
+            //now check to see if page matches regex.
+            const path = window.location.pathname;
+            if (compareRegex(path, status.siteConfig.checkoutPage)) {
+                //checkout page.
+                let price;
+                try {
+                    const priceText = $(status.siteConfig.totalPrice).text().replace(/[^0-9.-]+/g, "");
+                    const priceTemp = parseFloat(priceText);
+                    // tslint:disable-next-line: no-string-throw
+                    if (isNaN(priceTemp))
+                        throw ('not correct');
+                    price = priceTemp;
+                }
+                catch (err) {
+                    price = parseFloat(prompt('enter total price.'));
+                }
+                const key = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                let locked = true;
+                chrome.runtime.sendMessage({ key, type: 'register' });
+                chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+                    if (msg.type !== 'unlock')
+                        return false;
+                    //unlock
+                    console.log(msg.reject);
+                    if (msg.reject)
+                        alert('close this tab');
+                    locked = false;
+                    return true;
+                });
+                chrome.runtime.sendMessage({ target: "/pages/calc.html?price=" + price + '&key=' + key, type: 'openTab' });
+                while (locked) {
+                    alert('Confirm This Order In the New Tab. Or Close This Tab.');
+                    yield sleep(1);
+                }
             }
-            catch (err) {
-                price = parseFloat(prompt('enter total price.'));
-            }
-            const key = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-            let locked = true;
-            chrome.runtime.sendMessage({ key, type: 'register' });
-            chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-                console.log({ msg, sender });
-                if (msg.type !== 'unlock')
-                    return false;
-                console.log({ msg, sender, unlk: true });
-                //unlock
-                if (msg.reject)
-                    window.close();
-                locked = false;
+            return;
+        }
+        if (status.siteConfig.scroll) {
+            window.onscroll = () => {
+                frezeForTime(2000);
+            };
+        }
+        if (status.siteConfig.linkDelay) {
+            $('a:not([onclick])').click(() => {
+                frezeForTime(1200);
                 return true;
             });
-            chrome.runtime.sendMessage({ target: "/pages/calc.html?price=" + price + '&key=' + key, type: 'openTab' });
-            while (locked)
-                alert('Confirm This Order In the New Tab. Or Close This Tab.');
         }
-    }
-    if (status.siteConfig.scroll) {
-        window.onscroll = () => {
-            frezeForTime(2000);
-        };
-    }
-    if (status.siteConfig.linkDelay) {
-        $('a:not([onclick])').click(() => {
-            frezeForTime(1200);
-            return true;
-        });
-    }
+    });
 }
 //freze loader for time
 function frezeForTime(ms) {
@@ -84,6 +88,9 @@ function frezeForTime(ms) {
         now = new Date();
     }
 }
+const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
 function sendMsg() {
     const promise = new Promise((resolve) => {
         chrome.runtime.sendMessage({ hostname: location.hostname, type: 'get' }, (response) => {
