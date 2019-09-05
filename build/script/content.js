@@ -50,7 +50,6 @@ function interfere() {
                     if (msg.type !== 'unlock')
                         return false;
                     //unlock
-                    console.log(msg.reject);
                     if (msg.reject)
                         alert('close this tab');
                     locked = false;

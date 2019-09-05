@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="container">
-        <h1>Is this purchase worth <span class='amtDisplay'></span>?</h1>
+        <h1>Is This Purchase Worth <span class='amtDisplay'></span>?</h1>
         <p><span class='amtDisplay'></span> will really cost you:</p>
         <table class='table table-hover' id='TimeValueChart'>
           <thead>
@@ -25,6 +25,60 @@
           <tbody>
     
           </tbody>
+          <tfoot>
+            <tr><th scope="row" class="yFromNow"><input type="number" class="form-control" placeholder="Enter Years Here"></th><td class="valueAtY"></td><td class="yearNum"></td></tr>
+          </tfoot>
+        </table>
+        <hr/>
+        <h1>If You Saved This Amount Once A Year</h1>
+        <table class='table table-hover' id='TimeValueChartYear'>
+          <thead>
+            <tr>
+              <th>years from now</th>
+              <th>value</th>
+              <th>year</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+          </tbody>
+          <tfoot>
+            <tr><th scope="row" class="yFromNow"><input type="number" class="form-control" placeholder="Enter Years Here"></th><td class="valueAtY"></td><td class="yearNum"></td></tr>
+          </tfoot>
+        </table>
+        <hr/>
+        <h1>If You Saved This Amount Once A Week</h1>
+        <table class='table table-hover' id='TimeValueChartWeek'>
+          <thead>
+            <tr>
+              <th>years from now</th>
+              <th>value</th>
+              <th>year</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+          </tbody>
+          <tfoot>
+            <tr><th scope="row" class="yFromNow"><input type="number" class="form-control" placeholder="Enter Years Here"></th><td class="valueAtY"></td><td class="yearNum"></td></tr>
+          </tfoot>
+        </table>
+        <hr/>
+        <h1>If You Saved This Amount Every Day</h1>
+        <table class='table table-hover' id='TimeValueChartDay'>
+          <thead>
+            <tr>
+              <th>years from now</th>
+              <th>value</th>
+              <th>year</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+          </tbody>
+          <tfoot>
+            <tr><th scope="row" class="yFromNow"><input type="number" class="form-control" placeholder="Enter Years Here"></th><td class="valueAtY"></td><td class="yearNum"></td></tr>
+          </tfoot>
         </table>
         <hr/>
         <button type="button" class="btn btn-danger worthIt">It Is Worth It</button>

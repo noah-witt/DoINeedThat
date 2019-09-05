@@ -61,7 +61,6 @@ async function interfere(): Promise<void> {
             chrome.runtime.onMessage.addListener((msg , sender, sendResponse): boolean => {
                 if(msg.type!=='unlock') return false;
                 //unlock
-                console.log(msg.reject);
                 if(msg.reject) alert('close this tab');
                 locked = false;
                 return true;
