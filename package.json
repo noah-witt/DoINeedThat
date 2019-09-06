@@ -27,6 +27,8 @@
     "@types/node": "^12.7.3"
   },
   "dependencies": {
+    "@types/chartjs": "0.0.31",
+    "chartjs": "^0.3.24",
     "jquery": "^3.4.1"
   }
 }

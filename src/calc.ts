@@ -71,6 +71,8 @@ function initCalcPage():void {
 }
 
 function drawTimeValueTable(price: number, today: any): void {
+    const days: string[] = [price.toString()];
+    const values: number[] = [parseInt(today.format("YYYY"), 10)];
     YEAR_TIME_VALUE_TABLE_YEARS.forEach((yearOffset) => {
         const $tablerow = $(YEAR_TIME_VALUE_TABLE_TEMPLATE);
         $tablerow.find('.yFromNow').text(yearOffset);
@@ -78,6 +80,19 @@ function drawTimeValueTable(price: number, today: any): void {
         const target = today.clone().add(yearOffset, 'years');
         $tablerow.find('.yearNum').text(target.year());
         $('#TimeValueChart tbody').append($tablerow);
+        days.push(target.format("YYYY"));
+        values.push(futureValue(price, ASSUMED_RATE_OF_RETURN, yearOffset));
+    });
+    //@ts-ignore
+    const ctx = document.getElementById('TimeValueCanvas').getContext('2d');
+    //@ts-ignore
+    const chart = new Chart(ctx, {
+        labels: days,
+        type: 'line',
+        dataset: [{
+            label: 'dollars',
+            data: values,
+        }],
     });
     return;
 }
