@@ -1,3 +1,5 @@
+import moment = require("moment");
+
 const YEAR_TIME_VALUE_TABLE_TEMPLATE: string = '<tr><th scope="row" class="yFromNow"></th><td class="valueAtY"></td><td class="yearNum"></td></tr>';
 const YEAR_TIME_VALUE_TABLE_YEARS: number[] = [5,10,15,20,25,30,40,50,60];
 const ASSUMED_RATE_OF_RETURN = 12;
@@ -69,10 +71,12 @@ function initCalcPage():void {
 
     });
 }
-
+interface point {
+    x: number;
+    y: number;
+}
 function drawTimeValueTable(price: number, today: any): void {
-    const days: string[] = [price.toString()];
-    const values: number[] = [parseInt(today.format("YYYY"), 10)];
+    const points: point[] = [{x: parseFloat(today.format("YYYY")), y: price}];
     YEAR_TIME_VALUE_TABLE_YEARS.forEach((yearOffset) => {
         const $tablerow = $(YEAR_TIME_VALUE_TABLE_TEMPLATE);
         $tablerow.find('.yFromNow').text(yearOffset);
@@ -80,21 +84,38 @@ function drawTimeValueTable(price: number, today: any): void {
         const target = today.clone().add(yearOffset, 'years');
         $tablerow.find('.yearNum').text(target.year());
         $('#TimeValueChart tbody').append($tablerow);
-        days.push(target.format("YYYY"));
-        values.push(futureValue(price, ASSUMED_RATE_OF_RETURN, yearOffset));
+        points.push({
+            x:parseFloat(target.format("YYYY")),
+            y:parseFloat(futureValue(price, ASSUMED_RATE_OF_RETURN, yearOffset).toFixed(2)),
+        });
     });
-    //@ts-ignore
-    const ctx = document.getElementById('TimeValueCanvas').getContext('2d');
-    //@ts-ignore
-    const chart = new Chart(ctx, {
-        labels: days,
-        type: 'line',
-        dataset: [{
-            label: 'dollars',
-            data: values,
-        }],
-    });
+    drawGraph($('#TimeValueCanvas')[0], points);
     return;
+}
+
+function drawGraph(el: HTMLElement, points: point[]): Chart {
+    //@ts-ignore
+    const chart = new Chart(el.getContext('2d'), {
+        data: {
+            datasets: [{
+                showLine: true,
+                backgroundColor: 'green',
+                label: '$ over time',
+                data: points,
+            }],
+        },
+        type: 'scatter',
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                }],
+            },
+        },
+    });
+    return chart;
 }
 
 function drawTimeValueTableWeekly(price: number, today: any): void {
@@ -176,6 +197,24 @@ function futureValue(presentValue: number, interestRate: number, numberOfPeriods
     const x=(1+interestRate/100);
     const fValue=presentValue*(Math.pow(x,numberOfPeriods));
     return fValue;
+}
+
+function futereValueWithAdd(presentValue: number, interestRate: number, days: number, addAmt: number, dayPerAdd: number): number {
+    let total = futureValue(presentValue, interestRate, days/365);
+    for(let i=0; i<(days/dayPerAdd); i++) total += futureValue(presentValue, ASSUMED_RATE_OF_RETURN, (days-(i*dayPerAdd))/365 );
+    return total;
+}
+
+function pointDataFutereValueWithAdd(presentValue: number, interestRate: number,
+                                     days: number, addAmt: number, dayPerAdd: number, start: moment.Moment, years: number): point[] {
+    const points: point[] = [{x: parseFloat(start.format("YYYY")), y:futereValueWithAdd(presentValue, interestRate, days, addAmt, dayPerAdd)}];
+    for(let i=0; i<years*4; i++) {
+        points.push({
+            x: parseFloat(start.clone().add(i*4,'quarters').format("YYYY")),
+            y: futereValueWithAdd(presentValue, interestRate, days-(i*91.25), addAmt, dayPerAdd),
+        });
+    }
+    return points;
 }
 
 initCalcPage();
