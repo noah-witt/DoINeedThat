@@ -1,5 +1,3 @@
-import moment = require("moment");
-
 const YEAR_TIME_VALUE_TABLE_TEMPLATE: string = '<tr><th scope="row" class="yFromNow"></th><td class="valueAtY"></td><td class="yearNum"></td></tr>';
 const YEAR_TIME_VALUE_TABLE_YEARS: number[] = [5,10,15,20,25,30,40,50,60];
 const ASSUMED_RATE_OF_RETURN = 12;
@@ -201,17 +199,18 @@ function futureValue(presentValue: number, interestRate: number, numberOfPeriods
 
 function futereValueWithAdd(presentValue: number, interestRate: number, days: number, addAmt: number, dayPerAdd: number): number {
     let total = futureValue(presentValue, interestRate, days/365);
-    for(let i=0; i<(days/dayPerAdd); i++) total += futureValue(presentValue, ASSUMED_RATE_OF_RETURN, (days-(i*dayPerAdd))/365 );
+    for(let i=0; i<(days/dayPerAdd); i++) total += futureValue(addAmt, ASSUMED_RATE_OF_RETURN, (days-(i*dayPerAdd))/365 );
     return total;
 }
 
 function pointDataFutereValueWithAdd(presentValue: number, interestRate: number,
-                                     days: number, addAmt: number, dayPerAdd: number, start: moment.Moment, years: number): point[] {
-    const points: point[] = [{x: parseFloat(start.format("YYYY")), y:futereValueWithAdd(presentValue, interestRate, days, addAmt, dayPerAdd)}];
-    for(let i=0; i<years*4; i++) {
+                                     days: number, addAmt: number, dayPerAdd: number, start: any): point[] {
+    const years = days/365.0;
+    const points: point[] = [{x: parseFloat(start.format("YYYY")), y:parseFloat(presentValue.toFixed(2))}];
+    for(let i=0; i<years; i++) {
         points.push({
-            x: parseFloat(start.clone().add(i*4,'quarters').format("YYYY")),
-            y: futereValueWithAdd(presentValue, interestRate, days-(i*91.25), addAmt, dayPerAdd),
+            x: parseFloat(start.clone().add(i,'years').format("YYYY")),
+            y: parseFloat(futereValueWithAdd(presentValue, interestRate, days-(i*91.25), addAmt, dayPerAdd).toFixed(2)),
         });
     }
     return points;
