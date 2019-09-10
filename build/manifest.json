@@ -12,5 +12,9 @@
       ],
     "background": {
       "scripts": ["jquery.js", "script/bg.js"]
+    },
+    "browser_action": {
+      "default_title": "Do I Need That",
+      "default_popup": "pages/popup.html"
     }
   }

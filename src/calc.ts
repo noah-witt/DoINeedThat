@@ -192,8 +192,8 @@ const sleepCalc = (milliseconds: number): Promise<void> => {
 
 //futere value calculator.
 function futureValue(presentValue: number, interestRate: number, numberOfPeriods: number): number {
-    const x=(1+interestRate/100);
-    const fValue=presentValue*(Math.pow(x,numberOfPeriods));
+    const x: number = (1+interestRate/100);
+    const fValue: number =presentValue*(Math.pow(x,numberOfPeriods));
     return fValue;
 }
 
@@ -207,7 +207,7 @@ function pointDataFutereValueWithAdd(presentValue: number, interestRate: number,
                                      days: number, addAmt: number, dayPerAdd: number, start: any): point[] {
     const years = days/365.0;
     const points: point[] = [{x: parseFloat(start.format("YYYY")), y:parseFloat(presentValue.toFixed(2))}];
-    for(let i=0; i<years; i++) {
+    for(let i=0; i<years*4; i++) {
         points.push({
             x: parseFloat(start.clone().add(i,'years').format("YYYY")),
             y: parseFloat(futereValueWithAdd(presentValue, interestRate, days-(i*91.25), addAmt, dayPerAdd).toFixed(2)),
