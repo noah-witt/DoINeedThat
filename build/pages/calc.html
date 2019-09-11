@@ -29,7 +29,7 @@
             <tr><th scope="row" class="yFromNow"><input type="number" class="form-control" placeholder="Enter Years Here"></th><td class="valueAtY"></td><td class="yearNum"></td></tr>
           </tfoot>
         </table>
-        <canvas id="TimeValueCanvas"></canvas>
+        <canvas id="TimeValueCanvasOnce"></canvas>
         <hr/>
         <h1>If You Saved This Amount Once A Year</h1>
         <table class='table table-hover' id='TimeValueChartYear'>
@@ -47,6 +47,7 @@
             <tr><th scope="row" class="yFromNow"><input type="number" class="form-control" placeholder="Enter Years Here"></th><td class="valueAtY"></td><td class="yearNum"></td></tr>
           </tfoot>
         </table>
+        <canvas id="TimeValueCanvasYear"></canvas>
         <hr/>
         <h1>If You Saved This Amount Once A Week</h1>
         <table class='table table-hover' id='TimeValueChartWeek'>
@@ -64,6 +65,7 @@
             <tr><th scope="row" class="yFromNow"><input type="number" class="form-control" placeholder="Enter Years Here"></th><td class="valueAtY"></td><td class="yearNum"></td></tr>
           </tfoot>
         </table>
+        <canvas id="TimeValueCanvasWeek"></canvas>
         <hr/>
         <h1>If You Saved This Amount Every Day</h1>
         <table class='table table-hover' id='TimeValueChartDay'>
@@ -81,17 +83,19 @@
             <tr><th scope="row" class="yFromNow"><input type="number" class="form-control" placeholder="Enter Years Here"></th><td class="valueAtY"></td><td class="yearNum"></td></tr>
           </tfoot>
         </table>
+        <canvas id="TimeValueCanvasDay"></canvas>
         <hr/>
         <button type="button" class="btn btn-danger worthIt">It Is Worth It</button>
         <button type="button" class="btn btn-success notWorthIt">It Is Not Worth It</button>
         <br/>
-        <nav class="navbar navbar-light bg-light"><a href="/license.html" target='_blank'>&copy; Noah Witt 2019. MIT License.</a> <a href="mailto:noah@noah-witt.com">email me at noah@noah-witt.com</a> <small>This assumes a <samp>12%</samp> annual rate of return. <a href="https://www.daveramsey.com/blog/the-12-reality">Source</a></small></nav>
+        <nav class="navbar navbar-light bg-light"><a href="/license.html" target='_blank'>&copy; Noah Witt 2019. MIT License.</a> <a href="mailto:noah@noah-witt.com">email me at noah@noah-witt.com</a> <small>This assumes a <samp>12%</samp> annual rate of return. <a href="https://www.daveramsey.com/blog/the-12-reality" target="_blank">Source</a></small></nav>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="js/jquery.3.4.1.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/Chart.bundle.min.js"></script>
+    <script src="js/chartjs-plugin-annotation.min.js"></script>
     <script src="js/moment.js"></script>
     <script src="/script/calc.js"></script>
   </body>
