@@ -16,6 +16,7 @@ function initCalcPage():void {
     drawTimeValueTableWeekly(price, today);
     drawTimeValueTableDay(price, today);
     drawTimeValueTableYear(price, today);
+    moneyVisual(price);
     drawGraphMulti($('#TimeValueCanvas')[0], [{
         name: "Value Over Time",
         points: pointDataFutereValueWithAdd(price, ASSUMED_RATE_OF_RETURN, GRAPH_YEARS_OUT*365, 0, 365, today),
@@ -82,6 +83,66 @@ function initCalcPage():void {
 
     });
 }
+
+function moneyVisual(price: number) {
+    const MONEY_TEMPLATE = "<img style='width: 16%;'></img>";
+    const hundreds = Math.floor(price/100);
+    let left = price-(hundreds*100);
+    const fifties = Math.floor(left/50);
+    left -= fifties*50;
+    const twentys = Math.floor(left/20);
+    left -= twentys*20;
+    const tens = Math.floor(left/10);
+    left -= tens*10;
+    const fives = Math.floor(left/5);
+    left -= fives*5;
+    const twos = Math.floor(left/2);
+    left -= twos*2;
+    const ones = Math.floor(left);
+    console.log({
+        hundreds, fifties, twentys, tens, fives, twos, ones,
+    });
+    //now to buildout.
+    const $target = $("<span></span>");
+    //now loop through each and place graphics.
+    for(let i =0; i< hundreds; i++) {
+        const $item = $(MONEY_TEMPLATE);
+        $item.attr('src', 'img/100.png');
+        $target.append($item[0].outerHTML);
+    }
+    for(let i =0; i< fifties; i++) {
+        const $item = $(MONEY_TEMPLATE);
+        $item.attr('src', 'img/50.png');
+        $target.append($item[0].outerHTML);
+    }
+    for(let i =0; i< twentys; i++) {
+        const $item = $(MONEY_TEMPLATE);
+        $item.attr('src', 'img/20.png');
+        $target.append($item[0].outerHTML);
+    }
+    for(let i =0; i< tens; i++) {
+        const $item = $(MONEY_TEMPLATE);
+        $item.attr('src', 'img/10.png');
+        $target.append($item[0].outerHTML);
+    }
+    for(let i =0; i< fives; i++) {
+        const $item = $(MONEY_TEMPLATE);
+        $item.attr('src', 'img/5.png');
+        $target.append($item[0].outerHTML);
+    }
+    for(let i =0; i< twos; i++) {
+        const $item = $(MONEY_TEMPLATE);
+        $item.attr('src', 'img/2.png');
+        $target.append($item[0].outerHTML);
+    }
+    for(let i =0; i< ones; i++) {
+        const $item = $(MONEY_TEMPLATE);
+        $item.attr('src', 'img/1.png');
+        $target.append($item[0].outerHTML);
+    }
+    $("#moneyArea").html($target[0].outerHTML);
+}
+
 interface point {
     x: number;
     y: number;
