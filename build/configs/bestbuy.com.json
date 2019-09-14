@@ -1,0 +1,6 @@
+{
+    "name": "Bestbuy",
+    "checkoutPage": ["[a-zA-Z/?]*checkout[a-zA-Z/?]*"],
+    "checkoutPrompt": true,
+    "totalPrice": "#checkoutApp > div > div:nth-child(1) > div.checkout.large-view > main > div.checkout__container > div.checkout__col.checkout__col--secondary.anchor > section > div.order-summary__bd > section > div > div.order-summary__total > div.order-summary__price > span"
+}

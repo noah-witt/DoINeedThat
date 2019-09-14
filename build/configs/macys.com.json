@@ -1,0 +1,6 @@
+{
+    "name": "Macys",
+    "checkoutPage": ["[a-zA-Z/?]*chkout[a-zA-Z/?]*"],
+    "checkoutPrompt": true,
+    "totalPrice": "#rc-at-order-total-value"
+}

@@ -1,0 +1,6 @@
+{
+    "name": "Wish",
+    "checkoutPage": ["[a-zA-Z/?]*payment[a-zA-Z/?]*"],
+    "checkoutPrompt": true,
+    "totalPrice": ""
+}

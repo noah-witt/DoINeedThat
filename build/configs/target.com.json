@@ -2,5 +2,5 @@
     "name": "Target",
     "checkoutPage": ["[a-zA-Z/?]*co-deliverymethod[a-zA-Z/?]*"],
     "checkoutPrompt": true,
-    "totalPrice": "#orderSummaryWrapperDiv > div > div > div.Row-uds8za-0.h-padding-a-tight.OrderSummary__StyledRow-sc-159qj1g-0.dUTiGK > div:nth-child(8) > div > p:nth-child(2)",
+    "totalPrice": "#orderSummaryWrapperDiv > div > div > div.Row-uds8za-0.h-padding-a-tight.OrderSummary__StyledRow-sc-159qj1g-0.dUTiGK > div:nth-child(8) > div > p:nth-child(2)"
 }

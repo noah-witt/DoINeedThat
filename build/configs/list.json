@@ -5,6 +5,11 @@
         {"matches":["[a-zA-Z]*\\.walmart\\.com", "walmart\\.com"], "config":"walmart.com.json"},
         {"matches":["[a-zA-Z]*\\.etsy\\.com", "etsy\\.com"], "config":"etsy.com.json"},
         {"matches":["[a-zA-Z]*\\.homedepot\\.com", "homedepot\\.com"], "config":"homedepot.com.json"},
-        {"matches":["[a-zA-Z]*\\.target\\.com", "target\\.com"], "config":"target.com.json"}
+        {"matches":["[a-zA-Z]*\\.target\\.com", "target\\.com"], "config":"target.com.json"},
+        {"matches":["[a-zA-Z]*\\.bestbuy\\.com", "bestbuy\\.com"], "config":"bestbuy.com.json"},
+        {"matches":["[a-zA-Z]*\\.lowes\\.com", "lowes\\.com"], "config":"lowes.com.json"},
+        {"matches":["[a-zA-Z]*\\.wish\\.com", "wish\\.com"], "config":"wish.com.json"},
+        {"matches":["[a-zA-Z]*\\.macys\\.com", "macys\\.com"], "config":"macys.com.json"},
+        {"matches":["[a-zA-Z]*\\.apple\\.com", "apple\\.com"], "config":"apple.com.json"}
     ]
 }

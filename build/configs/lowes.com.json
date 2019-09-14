@@ -1,0 +1,6 @@
+{
+    "name": "Bestbuy",
+    "checkoutPage": ["[a-zA-Z/?]*checkout[a-zA-Z/?]*"],
+    "checkoutPrompt": true,
+    "totalPrice": "#CheckoutOrderSummary > div.order-summ-detail.trench.trench-small.no-border > div:nth-child(2) > div:nth-child(4) > div.grid-40.align-right > h5"
+}

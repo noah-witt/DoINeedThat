@@ -1,0 +1,6 @@
+{
+    "name": "Wish",
+    "checkoutPage": ["[a-zA-Z/?]*/shop/bag"],
+    "checkoutPrompt": true,
+    "totalPrice": "#bag-content > div.rs-summary > div > div.rs-summary-content.rs-summary-total > div.rs-summary-value"
+}
