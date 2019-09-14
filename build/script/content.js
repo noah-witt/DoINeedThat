@@ -23,9 +23,6 @@ function interfere() {
         const status = doINeedThatStatus;
         if (!status.enabled)
             return;
-        if (status.siteConfig.pause) {
-            frezeForTime(status.siteConfig.pauseTimeMs);
-        }
         if (status.siteConfig.checkoutPrompt) {
             //now check to see if page matches regex.
             const path = window.location.pathname;
@@ -33,6 +30,7 @@ function interfere() {
                 //checkout page.
                 let price;
                 try {
+                    yield sleep(250);
                     const priceText = $(status.siteConfig.totalPrice).text().replace(/[^0-9.-]+/g, "");
                     const priceTemp = parseFloat(priceText);
                     // tslint:disable-next-line: no-string-throw
@@ -50,29 +48,12 @@ function interfere() {
                     if (msg.type !== 'unlock')
                         return false;
                     //unlock
-                    if (msg.reject)
-                        alert('close this tab');
                     locked = false;
                     return true;
                 });
                 chrome.runtime.sendMessage({ target: "/pages/calc.html?price=" + price + '&key=' + key, type: 'openTab' });
-                while (locked) {
-                    alert('Confirm This Order In the New Tab. Or Close This Tab.');
-                    yield sleep(1);
-                }
             }
             return;
-        }
-        if (status.siteConfig.scroll) {
-            window.onscroll = () => {
-                frezeForTime(2000);
-            };
-        }
-        if (status.siteConfig.linkDelay) {
-            $('a:not([onclick])').click(() => {
-                frezeForTime(1200);
-                return true;
-            });
         }
     });
 }

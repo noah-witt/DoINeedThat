@@ -1,0 +1,6 @@
+{
+    "name": "Walmart",
+    "checkoutPage": ["[a-zA-Z/?]*/checkout/[a-zA-Z/?]*"],
+    "checkoutPrompt": true,
+    "totalPrice": ".order-summary-price"
+}

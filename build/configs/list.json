@@ -1,6 +1,10 @@
 {
     "sites" : [
         {"matches":["[a-zA-Z]*\\.amazon\\.com", "amazon\\.com"], "config":"amazon.com.json"},
-        {"matches":["[a-zA-Z]*\\.ebay\\.com", "ebay\\.com"], "config":"ebay.com.json"}
+        {"matches":["[a-zA-Z]*\\.ebay\\.com", "ebay\\.com"], "config":"ebay.com.json"},
+        {"matches":["[a-zA-Z]*\\.walmart\\.com", "walmart\\.com"], "config":"walmart.com.json"},
+        {"matches":["[a-zA-Z]*\\.etsy\\.com", "etsy\\.com"], "config":"etsy.com.json"},
+        {"matches":["[a-zA-Z]*\\.homedepot\\.com", "homedepot\\.com"], "config":"homedepot.com.json"},
+        {"matches":["[a-zA-Z]*\\.target\\.com", "target\\.com"], "config":"target.com.json"}
     ]
 }

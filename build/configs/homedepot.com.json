@@ -1,0 +1,6 @@
+{
+    "name": "Home Depot",
+    "checkoutPage": ["[a-zA-Z/?]*mycheckout[a-zA-Z/?]*"],
+    "checkoutPrompt": true,
+    "totalPrice": "#rightRail > div:nth-child(3) > div > div:nth-child(3) > div.grid.u__m-top-normal.u__m-bottom-tiny > div > span.u__right.price__wrapper > span > span"
+}

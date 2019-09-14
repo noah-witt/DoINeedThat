@@ -11,13 +11,8 @@ interface configList {
 
 interface siteConfig {
     name: string;
-    slowImg: boolean;
     checkoutPage: string[];
     checkoutPrompt: boolean;
-    pause: boolean;
-    pauseTimeMs: number;
-    scroll: boolean;
-    linkDelay: boolean;
     totalPrice: string;
 }
 
@@ -39,9 +34,6 @@ async function initCotent(): Promise<void> {
 async function interfere(): Promise<void> {
     const status = doINeedThatStatus;
     if(!status.enabled) return;
-    if(status.siteConfig.pause) {
-        frezeForTime(status.siteConfig.pauseTimeMs);
-    }
     if(status.siteConfig.checkoutPrompt) {
         //now check to see if page matches regex.
         const path = window.location.pathname;
@@ -49,6 +41,7 @@ async function interfere(): Promise<void> {
             //checkout page.
             let price: number;
             try {
+                await sleep(250);
                 const priceText = $(status.siteConfig.totalPrice).text().replace(/[^0-9.-]+/g,"");
                 const priceTemp = parseFloat(priceText);
                 // tslint:disable-next-line: no-string-throw
@@ -63,28 +56,12 @@ async function interfere(): Promise<void> {
             chrome.runtime.onMessage.addListener((msg , sender, sendResponse): boolean => {
                 if(msg.type!=='unlock') return false;
                 //unlock
-                if(msg.reject) alert('close this tab');
                 locked = false;
                 return true;
             });
             chrome.runtime.sendMessage({target:"/pages/calc.html?price="+price+'&key='+key, type:'openTab'});
-            while(locked) {
-                alert('Confirm This Order In the New Tab. Or Close This Tab.');
-                await sleep(1);
-            }
         }
         return;
-    }
-    if(status.siteConfig.scroll) {
-        window.onscroll = () => {
-            frezeForTime(2000);
-        };
-    }
-    if(status.siteConfig.linkDelay) {
-        $('a:not([onclick])').click(()=> {
-            frezeForTime(1200);
-            return true;
-        });
     }
 }
 

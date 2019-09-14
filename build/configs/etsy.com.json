@@ -1,0 +1,6 @@
+{
+    "name": "Etsy",
+    "checkoutPage": ["[a-zA-Z/?]*cart[0-9/]*review"],
+    "checkoutPrompt": true,
+    "totalPrice": ""
+}

@@ -1,0 +1,6 @@
+{
+    "name": "Ebay",
+    "checkoutPage": ["[a-zA-Z/?]*rgxo[a-zA-Z/?]*"],
+    "checkoutPrompt": true,
+    "totalPrice": ".amount span.text-display span"
+}
