@@ -1,3 +1,5 @@
+/*Noah Witt <noah@noah-witt.com> 0x564499DBBC6CA56A
+Contect Script*/
 interface site {
     config: string;
     matches: string[];

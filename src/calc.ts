@@ -8,12 +8,27 @@ function initCalcPage():void {
     const price: number = parseFloat(urlParams.get('price'));
     key = urlParams.get('key');
     $('.amtDisplay').text(moneyFormater(price));
+    //hide buttons when user code.
+    if(key.startsWith('USER_')) $('.smtBtn').hide();
     //@ts-ignore
     const today = moment();
     drawTimeValueTable(price, today);
     drawTimeValueTableWeekly(price, today);
     drawTimeValueTableDay(price, today);
     drawTimeValueTableYear(price, today);
+    drawGraphMulti($('#TimeValueCanvas')[0], [{
+        name: "Value Over Time",
+        points: pointDataFutereValueWithAdd(price, ASSUMED_RATE_OF_RETURN, GRAPH_YEARS_OUT*365, 0, 365, today),
+    }, {
+        name: "Value Over Time If Ammount Saved Every Week",
+        points: pointDataFutereValueWithAdd(price, ASSUMED_RATE_OF_RETURN, GRAPH_YEARS_OUT*365, price, 7, today),
+    }, {
+        name: "Value Over Time If Ammount Saved Every Day",
+        points: pointDataFutereValueWithAdd(price, ASSUMED_RATE_OF_RETURN, GRAPH_YEARS_OUT*365, price, 1, today),
+    }, {
+        name: "Value Over Time If Ammount Saved Every Year",
+        points: pointDataFutereValueWithAdd(price, ASSUMED_RATE_OF_RETURN, GRAPH_YEARS_OUT*365, price, 365, today),
+    }]);
     $('.worthIt').click(() => {
         inform(true);
     });
@@ -80,7 +95,6 @@ function drawTimeValueTable(price: number, today: any): void {
         $tablerow.find('.yearNum').text(target.year());
         $('#TimeValueChart tbody').append($tablerow);
     });
-    drawGraph($('#TimeValueCanvasOnce')[0], pointDataFutereValueWithAdd(price, ASSUMED_RATE_OF_RETURN, GRAPH_YEARS_OUT*365, 0, 365, today));
     return;
 }
 
@@ -96,50 +110,26 @@ interface dataset {
         content: string;
     }
 }
-function drawGraph(el: HTMLElement, points: point[]): Chart {
-    //find static points to pick.
-    let minVal = Number.MAX_SAFE_INTEGER;
-    let minP = points[0];
-    let maxVal = Number.MIN_SAFE_INTEGER;
-    let maxP = points[0];
-    points.forEach((p) => {
-        if(maxVal<p.y) {
-            maxVal = p.y;
-            maxP = p;
-        }
-        if(minVal>p.y) {
-            minVal = p.y;
-            minP = p;
-        }
+
+
+interface set {
+    points: point[];
+    name: string;
+}
+
+function drawGraphMulti(el: HTMLElement, sets: set[]): Chart {
+    const datasets = [];
+    sets.forEach((points) => {
+        datasets.push({
+            showLine: true,
+            label: points.name,
+            data: points.points,
+        });
     });
-    const targetVal = maxVal*1.1; //extra 10%
-    let now = 1000;
-    const lineSets: dataset[] = [];
-    while(now<targetVal) {
-        lineSets.push({
-            type: 'line',
-            mode: 'horizontal',
-            scaleID: 'y-axis-0',
-            value: now,
-            borderColor: 'blue',
-            borderWidth: 4,
-            label: {
-              enabled: false,
-              content: moneyFormater(now),
-            },
-          });
-        now*=10;
-    }
-    console.log(lineSets);
     //@ts-ignore
     const chart = new Chart(el.getContext('2d'), {
         data: {
-            datasets: [{
-                showLine: true,
-                backgroundColor: 'green',
-                label: '$ over time',
-                data: points,
-            }],
+            datasets,
         },
         type: 'scatter',
         options: {
@@ -149,9 +139,6 @@ function drawGraph(el: HTMLElement, points: point[]): Chart {
                         beginAtZero: true,
                     },
                 }],
-            },
-            annotation: {
-                annotations: lineSets,
             },
         },
     });
@@ -170,7 +157,6 @@ function drawTimeValueTableWeekly(price: number, today: any): void {
         $tablerow.find('.yearNum').text(endDate.year());
         $('#TimeValueChartWeek tbody').append($tablerow);
     });
-    drawGraph($('#TimeValueCanvasWeek')[0], pointDataFutereValueWithAdd(price, ASSUMED_RATE_OF_RETURN, GRAPH_YEARS_OUT*365, price, 7, today));
     return;
 }
 
@@ -186,7 +172,6 @@ function drawTimeValueTableDay(price: number, today: any): void {
         $tablerow.find('.yearNum').text(endDate.year());
         $('#TimeValueChartDay tbody').append($tablerow);
     });
-    drawGraph($('#TimeValueCanvasDay')[0], pointDataFutereValueWithAdd(price, ASSUMED_RATE_OF_RETURN, GRAPH_YEARS_OUT*365, price, 1, today));
     return;
 }
 
@@ -201,7 +186,6 @@ function drawTimeValueTableYear(price: number, today: any): void {
         $tablerow.find('.yearNum').text(endDate.year());
         $('#TimeValueChartYear tbody').append($tablerow);
     });
-    drawGraph($('#TimeValueCanvasYear')[0], pointDataFutereValueWithAdd(price, ASSUMED_RATE_OF_RETURN, GRAPH_YEARS_OUT*365, price, 365, today));
     return;
 }
 
