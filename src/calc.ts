@@ -85,7 +85,7 @@ function initCalcPage():void {
 }
 
 function moneyVisual(price: number) {
-    const MONEY_TEMPLATE = "<img style='width: 16%;'></img>";
+    const MONEY_TEMPLATE = "<img style='width: 14%;'></img>";
     const hundreds = Math.floor(price/100);
     let left = price-(hundreds*100);
     const fifties = Math.floor(left/50);
