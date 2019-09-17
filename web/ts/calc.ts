@@ -11,10 +11,15 @@ function initCalcPage(): void {
         //@ts-ignore
         $('#amtModal').modal('toggle');
         $('#amtModal button').click(() => {
-            window.location.href = window.location.href + "?price="+$('#amtModal input').val()+"&key=USER_A1";
+            window.location.href = window.location.href + "?price="+$('#amtModal input').val()+
+                "&key=USER_"+Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         });
         return;
     }
+    $('#changeAmt button').click(() => {
+        const paramString = '?'+window.location.href.split('?')[1];
+        window.location.href = window.location.href.substr(0, window.location.href.length-paramString.length);
+    });
     $('.amtDisplay').text(moneyFormater(price));
     //hide buttons when user code.
     if(key.startsWith('USER_')) $('.smtBtn').hide();
