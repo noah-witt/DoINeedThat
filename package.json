@@ -29,6 +29,6 @@
   "dependencies": {
     "@types/chartjs": "0.0.31",
     "chartjs": "^0.3.24",
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.0"
   }
 }
